@@ -41,6 +41,7 @@ public class SettingsMenu : MonoBehaviour
         } else {
             m_resolutionDropdown.value = currentResolutionIndex;
         }
+
         m_resolutionDropdown.RefreshShownValue();
     }
 
@@ -53,19 +54,23 @@ public class SettingsMenu : MonoBehaviour
 
     private int initResolutionDropdown() {
         int currentResolutionIndex = 0;
+        List<Resolution> resolutions = new List<Resolution>();
         List<string> resolutionOptions = new List<string>();
 
-        m_resolutions = Screen.resolutions;
         m_resolutionDropdown.ClearOptions();
-        for (int i = 0; i < m_resolutions.Length; i++) {
-            string option = m_resolutions[i].width + " x " + m_resolutions[i].height;
+        foreach (Resolution resolution in Screen.resolutions) {
+            string option = resolution.width + " x " + resolution.height;
 
-            resolutionOptions.Add(option);
-            if (m_resolutions[i].width == Screen.currentResolution.width &&
-                m_resolutions[i].height == Screen.currentResolution.height) {
-                currentResolutionIndex = i;
+            if (resolution.width > 500 && !resolutionOptions.Contains(option)) {
+                resolutions.Add(resolution);
+                resolutionOptions.Add(option);
+                if (resolution.width == Screen.currentResolution.width &&
+                    resolution.height == Screen.currentResolution.height) {
+                    currentResolutionIndex = resolutionOptions.Count - 1;
+                }
             }
         }
+        m_resolutions = resolutions.ToArray();
         m_resolutionDropdown.AddOptions(resolutionOptions);
         return currentResolutionIndex;
     }
@@ -89,7 +94,6 @@ public class SettingsMenu : MonoBehaviour
     }
 
     public void setFullscreen() {
-        Debug.Log("fullscreen = " + (m_fullScreenToggle.isOn ? "true" : "false"));
         PlayerPrefs.SetInt("FullScreen", m_fullScreenToggle.isOn ? 1 : 0);
         Screen.fullScreen = m_fullScreenToggle.isOn;
     }
@@ -97,10 +101,8 @@ public class SettingsMenu : MonoBehaviour
     public void setResolution() {
         Resolution resolution = m_resolutions[m_resolutionDropdown.value];
 
-        Debug.Log("resolutionIndex = " + m_resolutionDropdown.value);
-        Debug.Log("resolution.width = " + resolution.width);
-        Debug.Log("resolution.height = " + resolution.height);
         PlayerPrefs.SetInt("ResolutionIndex", m_resolutionDropdown.value);
+        Debug.Log("resolution.width = " + resolution.width);
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
