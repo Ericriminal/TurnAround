@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
         if (grounded)
         {
             m_HorizontalCamera += Input.GetAxis("Mouse X") * m_TurnSpeed;
-            m_VerticalCamera += Input.GetAxis("Mouse Y") * m_TurnSpeed;
+            m_VerticalCamera += Input.GetAxis("Mouse Y") * m_TurnSpeed;
         }
 
 
@@ -80,13 +80,13 @@ public class Player : MonoBehaviour
             ZGravity();
     }
 
-    /// 1 
+    /// 1
     private void ContinuousGravityXPos()
     {
         m_XPos = true;
         m_rotating = true;
         Physics.gravity = new Vector3(10.0F, 0, 0);
-        grounded = false; 
+        grounded = false;
         m_VerticalCamera = 0f;
         m_HorizontalCamera = 0f;
 
@@ -310,7 +310,7 @@ public class Player : MonoBehaviour
     {
         m_PlayerRB.velocity = new Vector3(0, 0, m_PlayerRB.velocity.z);
         if (!grounded)
-        {   
+        {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, m_TargetRotation, step);
             return;
         }
@@ -360,7 +360,7 @@ public class Player : MonoBehaviour
     {
         m_PlayerRB.velocity = new Vector3(m_PlayerRB.velocity.x, 0, 0);
         if (!grounded)
-        {   
+        {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, m_TargetRotation, step);
             return;
         }
