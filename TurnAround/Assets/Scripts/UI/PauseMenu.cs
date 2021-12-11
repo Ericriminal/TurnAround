@@ -14,7 +14,6 @@ public class PauseMenu : MainMenu
     private void Update() {
         // if (!m_gameOverMenu.activeSelf && Input.GetKeyDown("esc")) {
         if (Input.GetKeyDown("escape")) {
-            Debug.Log("esc");
             if (!m_inPauseMenu) {
                 pause();
             } else {
