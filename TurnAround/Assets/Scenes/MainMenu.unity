@@ -1322,7 +1322,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -70}
-  m_SizeDelta: {x: 100, y: 70}
+  m_SizeDelta: {x: 80, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2980658816627094178
 GameObject:
@@ -1337,7 +1337,7 @@ GameObject:
   - component: {fileID: 2980658816627094183}
   - component: {fileID: 2980658816627094176}
   m_Layer: 5
-  m_Name: LeaveButton
+  m_Name: QuitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1431,7 +1431,7 @@ GameObject:
   - component: {fileID: 2980658816984592913}
   - component: {fileID: 2980658816984592914}
   m_Layer: 5
-  m_Name: LeaveText
+  m_Name: QuitText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1478,7 +1478,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: LEAVE
+  m_Text: QUIT
 --- !u!224 &2980658816984592915
 RectTransform:
   m_ObjectHideFlags: 0
