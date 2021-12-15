@@ -7,7 +7,7 @@ public class InventoryManager : MonoBehaviour
 {
     // Start is called before the first frame update
     private int keyCount;
-    public TextMeshPro text;
+    public TMP_Text text;
 
     void Start()
     {

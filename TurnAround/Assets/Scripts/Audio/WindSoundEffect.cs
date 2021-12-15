@@ -18,7 +18,6 @@ public class WindSoundEffect : MonoBehaviour
     {
         combinedSpeed = Mathf.Abs(player.velocity.x + player.velocity.y + player.velocity.z);
         combinedSpeed /= 3f;
-        Debug.Log(combinedSpeed);
         combinedSpeed -= 4f;
         if (combinedSpeed > 10f)
             combinedSpeed = 10f;
