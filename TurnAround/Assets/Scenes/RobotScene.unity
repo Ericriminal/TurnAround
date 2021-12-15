@@ -653,6 +653,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robot_canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4776038929597214331, guid: 4c916a845ac45614f901b2b8895ab3af, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4776038929597214335, guid: 4c916a845ac45614f901b2b8895ab3af, type: 3}
       propertyPath: m_Pivot.x
       value: 0
