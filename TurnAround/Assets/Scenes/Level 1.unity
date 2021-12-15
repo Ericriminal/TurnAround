@@ -1038,7 +1038,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9baeb17b96badac43a719487f933d25e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RobotScript: {fileID: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  Canvas: {fileID: 0}
 --- !u!114 &398101049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4366,6 +4369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 398101045}
+  startPos: {fileID: 0}
   camEffect: {fileID: 398101051}
   m_Speed: 5
   m_TurnSpeed: 5
@@ -21232,6 +21236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1893805334}
   - component: {fileID: 1893805333}
+  - component: {fileID: 1893805335}
   m_Layer: 0
   m_Name: ExitZone
   m_TagString: Untagged
@@ -21266,6 +21271,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1893805335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893805332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be33719a1dcc7344195e70b542b1e0e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextLevelName: Level 2
 --- !u!1 &1909141077
 GameObject:
   m_ObjectHideFlags: 0
