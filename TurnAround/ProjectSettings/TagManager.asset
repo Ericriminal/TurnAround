@@ -9,6 +9,7 @@ TagManager:
   - loweffect
   - effect
   - Death
+  - Key
   layers:
   - Default
   - TransparentFX
