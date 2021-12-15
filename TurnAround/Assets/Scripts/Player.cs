@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; //So you can use SceneManager
 
 public class Player : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class Player : MonoBehaviour
     float m_VerticalCamera = 0f;
     bool m_rotating = false;
     public bool grounded = false;
+
+    public GameObject arrowNextPos;
     float rotZ = 0f;
     float m_HorizontalRotation = 0f;
     float m_VerticalRotation = 0f;
@@ -50,24 +53,24 @@ public class Player : MonoBehaviour
 
         // Y axis
         // if (Input.GetKeyDown(KeyCode.Alpha4) && !m_YNeg)
-        if (Input.GetKeyDown(KeyCode.Alpha1) && m_ZPos)
+        if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_ZPos)
             ContinuousGravityYNeg();
         // if (Input.GetKeyDown(KeyCode.Alpha3) && !m_YPos)
-        else if (Input.GetKeyDown(KeyCode.Alpha1) && m_YNeg)
+        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_YNeg)
             ContinuousGravityYPos();
         // X axis
         // if (Input.GetKeyDown(KeyCode.Alpha1) && !m_XPos)
-        else if (Input.GetKeyDown(KeyCode.Alpha1) && m_XNeg)
+        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_XNeg)
             ContinuousGravityXPos();
         // if (Input.GetKeyDown(KeyCode.Alpha2) && !m_XNeg)
-        else if (Input.GetKeyDown(KeyCode.Alpha1) && m_YPos)
+        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_YPos)
             ContinuousGravityXNeg();
         // Z axis
         // if (Input.GetKeyDown(KeyCode.Alpha6) && !m_ZNeg)
-        else if (Input.GetKeyDown(KeyCode.Alpha1) && m_XPos)
+        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_XPos)
             ContinuousGravityZNeg();
         // if (Input.GetKeyDown(KeyCode.Alpha5) && !m_ZPos)
-        else if (Input.GetKeyDown(KeyCode.Alpha1) && m_ZNeg)
+        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_ZNeg)
             ContinuousGravityZPos();
 
         if (Physics.gravity.y == 0 && Physics.gravity.z == 0)
@@ -328,7 +331,7 @@ public class Player : MonoBehaviour
     private void PositiveZGravity()
     {
         // limit vertical spin on camera
-        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -20 + m_VerticalRotation, 100 + m_VerticalRotation);
+        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -60 + m_VerticalRotation, 100 + m_VerticalRotation);
 
         // player turn around with camera
         transform.localRotation = Quaternion.Euler(m_HorizontalRotation + m_HorizontalCamera, 90.0f, 270.0F);
@@ -342,7 +345,7 @@ public class Player : MonoBehaviour
     private void NegativeZGravity()
     {
         // limit vertical spin on camera
-        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -20 + m_VerticalRotation, 100 + m_VerticalRotation);
+        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -60 + m_VerticalRotation, 100 + m_VerticalRotation);
 
         // player turn around with camera
         transform.localRotation = Quaternion.Euler(m_HorizontalRotation - m_HorizontalCamera, 90.0f, 90.0F);
@@ -375,7 +378,7 @@ public class Player : MonoBehaviour
     private void PositiveXGravity()
     {
         // limit vertical spin on camera
-        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -20 + m_VerticalRotation, 100 + m_VerticalRotation);
+        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -60 + m_VerticalRotation, 100 + m_VerticalRotation);
 
         // player turn around with camera
         transform.localRotation = Quaternion.Euler(m_HorizontalRotation - m_HorizontalCamera, 0, rotZ);
@@ -389,7 +392,7 @@ public class Player : MonoBehaviour
     private void NegativeXGravity()
     {
         // limit vertical spin on camera
-        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -20 + m_VerticalRotation, 100 + m_VerticalRotation);
+        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -60 + m_VerticalRotation, 100 + m_VerticalRotation);
 
             // player turn around with camera
             transform.localRotation = Quaternion.Euler(m_HorizontalRotation + m_HorizontalCamera, 0, rotZ);
@@ -423,7 +426,7 @@ public class Player : MonoBehaviour
     private void PositiveYGravity()
     {
         // limit vertical spin on camera
-        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -20 + m_VerticalRotation, 80 + m_VerticalRotation);
+        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -60 + m_VerticalRotation, 80 + m_VerticalRotation);
 
         // player turn around with camera
         transform.localRotation = Quaternion.Euler(0, m_HorizontalRotation - m_HorizontalCamera, rotZ);
@@ -437,7 +440,7 @@ public class Player : MonoBehaviour
     private void NegativeYGravity()
     {
         // limit vertical spin on camera
-        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -20 + m_VerticalRotation, 80 + m_VerticalRotation);
+        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -60 + m_VerticalRotation, 80 + m_VerticalRotation);
         // player turn around with camera
         transform.localRotation = Quaternion.Euler(0, m_HorizontalRotation + m_HorizontalCamera, rotZ);
 
@@ -450,16 +453,16 @@ public class Player : MonoBehaviour
     private void Move()
     {
         // right and left
-        if (Input.GetKey(KeyCode.RightArrow)) {
+        if (Input.GetKey(KeyCode.D)) {
             m_PlayerRB.velocity = transform.right * m_Speed;
-        } else if (Input.GetKey(KeyCode.LeftArrow)) {
+        } else if (Input.GetKey(KeyCode.A)) {
             m_PlayerRB.velocity = -transform.right * m_Speed;
         }
 
         // backward and forward
-        if (Input.GetKey(KeyCode.DownArrow)) {
+        if (Input.GetKey(KeyCode.S)) {
             m_PlayerRB.velocity += -transform.forward * m_Speed;
-        } else if (Input.GetKey(KeyCode.UpArrow)) {
+        } else if (Input.GetKey(KeyCode.W)) {
             m_PlayerRB.velocity += transform.forward * m_Speed;
         }
     }
@@ -468,6 +471,10 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag == "Ground")
             grounded = true;
+        if (other.gameObject.tag == "Death") {
+            grounded = true;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
 }
