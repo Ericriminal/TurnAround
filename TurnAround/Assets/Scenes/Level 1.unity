@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: a1785e0525be398429b4b2110d218959, type: 2}
   m_LightingSettings: {fileID: 45344065}
 --- !u!196 &4
 NavMeshSettings:
@@ -851,7 +851,6 @@ GameObject:
   - component: {fileID: 398101045}
   - component: {fileID: 398101047}
   - component: {fileID: 398101046}
-  - component: {fileID: 398101048}
   - component: {fileID: 398101049}
   - component: {fileID: 398101050}
   - component: {fileID: 398101051}
@@ -4252,7 +4251,7 @@ GameObject:
   - component: {fileID: 813686588}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
