@@ -7,12 +7,10 @@ public class PauseMenu : MainMenu
 {
     [SerializeField] private GameObject m_leaveMenu;
     [SerializeField] private GameObject m_panel;
-    // [SerializeField] private GameObject m_gameOverMenu;
 
     private bool m_inPauseMenu = false;
 
     private void Update() {
-        // if (!m_gameOverMenu.activeSelf && Input.GetKeyDown("esc")) {
         if (Input.GetKeyDown("escape")) {
             if (!m_inPauseMenu) {
                 pause();
@@ -20,6 +18,10 @@ public class PauseMenu : MainMenu
                 resume();
             }
         }
+    }
+
+    public bool inPauseMenu() {
+        return m_inPauseMenu;
     }
 
     private void pause() {

@@ -7,9 +7,16 @@ public class SceneLoader : MonoBehaviour
 {
     public Animator transition;
     public float transitionTime = 1f;
+    [SerializeField] private GameObject leftPanel;
+    [SerializeField] private GameObject rightPanel;
 
     private void Awake() {
         transform.GetChild(0).gameObject.SetActive(true);
+    }
+
+    public void SetActivePanels(bool active) {
+        leftPanel.SetActive(active);
+        rightPanel.SetActive(active);
     }
 
     public void LoadScene(int sceneIndex)
