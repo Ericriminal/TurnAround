@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     bool m_ZPos = false;
     bool m_ZNeg = false;
 
-
+    private PauseMenu m_pauseMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
         inventory = GetComponent<InventoryManager>();
         step = 100.0f * Time.deltaTime;
         Physics.gravity = new Vector3(0, -10.0F, 0);
+
+        m_pauseMenu = FindObjectOfType<PauseMenu>();
     }
 
 
@@ -54,7 +56,7 @@ public class Player : MonoBehaviour
         //     air_speed = 10f;
         // }
 
-        if (!m_rotating)
+        if (!m_rotating && !m_pauseMenu.isInPauseMenu())
         {
             m_HorizontalCamera += Input.GetAxis("Mouse X") * m_TurnSpeed;
             m_VerticalCamera += Input.GetAxis("Mouse Y") * m_TurnSpeed;

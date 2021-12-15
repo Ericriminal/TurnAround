@@ -20,7 +20,7 @@ public class PauseMenu : MainMenu
         }
     }
 
-    public bool inPauseMenu() {
+    public bool isInPauseMenu() {
         return m_inPauseMenu;
     }
 
