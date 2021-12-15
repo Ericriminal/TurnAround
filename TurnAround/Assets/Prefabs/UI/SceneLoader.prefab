@@ -165,6 +165,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transition: {fileID: 4728417839248247272}
   transitionTime: 1
+  leftPanel: {fileID: 4728417837236848652}
+  rightPanel: {fileID: 4728417838580258739}
 --- !u!1 &4728417838580258739
 GameObject:
   m_ObjectHideFlags: 0
