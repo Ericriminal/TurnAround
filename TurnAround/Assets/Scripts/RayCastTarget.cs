@@ -5,25 +5,26 @@ using UnityEngine;
 public class RayCastTarget : MonoBehaviour
 {
     public Robot_movement RobotScript;
+    public LayerMask layerMask;
+    public GameObject Canvas;
     void FixedUpdate()
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            Debug.Log("Did Hit");
-            Debug.Log(hit.collider.name);
-            if (hit.collider.name == "Robot") {
+            Canvas.SetActive(true);
+            if (hit.collider.tag == "Robot") {
                 if (Input.GetKeyDown(KeyCode.E)) {
-                    RobotScript.ActualizeTargetPosition(transform.position);
+                    hit.transform.gameObject.GetComponent<Robot_movement>().ActualizeTargetPosition(transform.position);
                 }
             }
         }
         else
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.white);
-            Debug.Log("Did not Hit");
+            Canvas.SetActive(false);
         }
     }
 }
