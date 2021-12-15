@@ -1397,6 +1397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_mainMenu: {fileID: 8829862504149644910}
   m_settingsMenu: {fileID: 8829862504480316293}
+  m_sceneLoader: {fileID: 0}
   m_leaveMenu: {fileID: 8829862504781042931}
   m_panel: {fileID: 8829862503368108232}
 --- !u!1 &8829862504781042931

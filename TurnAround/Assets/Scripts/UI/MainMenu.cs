@@ -7,9 +7,14 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] protected GameObject m_mainMenu;
     [SerializeField] protected GameObject m_settingsMenu;
+    protected SceneLoader m_sceneLoader;
+
+    private void Awake() {
+        m_sceneLoader = FindObjectOfType<SceneLoader>();
+    }
 
     public void play() {
-        SceneManager.LoadScene(1);
+        m_sceneLoader.LoadScene(1);
     }
 
     public void openSettingsMenu() {
