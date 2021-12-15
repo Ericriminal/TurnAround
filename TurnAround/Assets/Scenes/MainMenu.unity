@@ -330,50 +330,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
-    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
-      propertyPath: sounds.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
-      propertyPath: sounds.Array.data[0].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: af6583c1185713f408dc2a06c304692f, type: 3}
-    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
-      propertyPath: sounds.Array.data[0].loop
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
-      propertyPath: sounds.Array.data[0].name
-      value: Landing
-      objectReference: {fileID: 0}
-    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
-      propertyPath: sounds.Array.data[1].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: dbc5bb1d074310244b93a80e5dc978cd, type: 3}
-    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
-      propertyPath: sounds.Array.data[1].loop
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
-      propertyPath: sounds.Array.data[1].name
-      value: test
-      objectReference: {fileID: 0}
-    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
-      propertyPath: sounds.Array.data[1].pitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
-      propertyPath: sounds.Array.data[0].volume
-      value: 0.289
-      objectReference: {fileID: 0}
-    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
-      propertyPath: sounds.Array.data[1].volume
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
-      propertyPath: sounds.Array.data[1].mixerGroup
-      value: 
-      objectReference: {fileID: 24300002, guid: 0923159a37de47b4bb15e3f447119ed1, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
 --- !u!1 &764319192
