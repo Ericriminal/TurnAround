@@ -5,16 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-
     public Animator transition;
     public float transitionTime = 1f;
 
-    public void LoadNextScene()
-    {
-        StartCoroutine(LoadScene(SceneManager.GetActiveScene().buildIndex + 1));
+    private void Awake() {
+        transform.GetChild(0).gameObject.SetActive(true);
     }
 
-    IEnumerator LoadScene(int sceneIndex)
+    public void LoadScene(int sceneIndex)
+    {
+        StartCoroutine(LoadScene1(sceneIndex));
+    }
+
+    private IEnumerator LoadScene1(int sceneIndex)
     {
         transition.SetTrigger("Start");
 

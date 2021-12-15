@@ -47,7 +47,7 @@ public class PauseMenu : MainMenu
     }
 
     public void goToMainMenu() {
+        m_sceneLoader.LoadScene(0);
         resume();
-        SceneManager.LoadScene(0);
     }
 }
