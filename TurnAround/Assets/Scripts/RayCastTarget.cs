@@ -7,7 +7,7 @@ public class RayCastTarget : MonoBehaviour
     public Robot_movement RobotScript;
     public LayerMask layerMask;
     public GameObject Canvas;
-    void FixedUpdate()
+    void Update()
     {
         RaycastHit hit;
 
