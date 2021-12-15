@@ -48,7 +48,7 @@ public class Robot_movement : MonoBehaviour
         else
             velocityz = 0;
         
-        _rigidbody.velocity = new Vector3 (velocityx, 0, velocityz);
+        _rigidbody.velocity = new Vector3 (velocityx, _rigidbody.velocity.y, velocityz);
     }
 
     public void ActualizeTargetPosition(Vector3 NewTarget)

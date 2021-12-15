@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; //So you can use SceneManager
 
 public class Player : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class Player : MonoBehaviour
     float m_VerticalCamera = 0f;
     bool m_rotating = false;
     public bool grounded = false;
+
+    public GameObject arrowNextPos;
     float rotZ = 0f;
     float m_HorizontalRotation = 0f;
     float m_VerticalRotation = 0f;
@@ -41,52 +44,54 @@ public class Player : MonoBehaviour
     {
         float horizontal = Input.GetAxis("Horizontal") * m_Speed;
         float vertical = Input.GetAxis("Vertical") * m_Speed;
-        if (grounded)
+        if (!m_rotating)
         {
             m_HorizontalCamera += Input.GetAxis("Mouse X") * m_TurnSpeed;
-            m_VerticalCamera += Input.GetAxis("Mouse Y") * m_TurnSpeed;
+            m_VerticalCamera += Input.GetAxis("Mouse Y") * m_TurnSpeed;
         }
 
 
+        // Y axis
+        // if (Input.GetKeyDown(KeyCode.Alpha4) && !m_YNeg)
+        if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_ZPos)
+            ContinuousGravityYNeg();
+        // if (Input.GetKeyDown(KeyCode.Alpha3) && !m_YPos)
+        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_YNeg)
+            ContinuousGravityYPos();
         // X axis
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !m_XPos)
+        // if (Input.GetKeyDown(KeyCode.Alpha1) && !m_XPos)
+        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_XNeg)
             ContinuousGravityXPos();
-        if (Input.GetKeyDown(KeyCode.Alpha2) && !m_XNeg)
+        // if (Input.GetKeyDown(KeyCode.Alpha2) && !m_XNeg)
+        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_YPos)
             ContinuousGravityXNeg();
+        // Z axis
+        // if (Input.GetKeyDown(KeyCode.Alpha6) && !m_ZNeg)
+        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_XPos)
+            ContinuousGravityZNeg();
+        // if (Input.GetKeyDown(KeyCode.Alpha5) && !m_ZPos)
+        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_ZNeg)
+            ContinuousGravityZPos();
 
         if (Physics.gravity.y == 0 && Physics.gravity.z == 0)
             XGravity();
 
-        // Y axis
-        if (Input.GetKeyDown(KeyCode.Alpha3) && !m_YPos)
-            ContinuousGravityYPos();
-        if (Input.GetKeyDown(KeyCode.Alpha4) && !m_YNeg)
-            ContinuousGravityYNeg();
 
         if (Physics.gravity.x == 0 && Physics.gravity.z == 0)
             YGravity();
 
-        // Z axis
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            ContinuousGravityZPos();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            ContinuousGravityZNeg();
-        }
 
         if (Physics.gravity.x == 0 && Physics.gravity.y == 0)
             ZGravity();
     }
 
-    /// 1 
+    /// 1
     private void ContinuousGravityXPos()
     {
         m_XPos = true;
         m_rotating = true;
         Physics.gravity = new Vector3(10.0F, 0, 0);
-        grounded = false; 
+        grounded = false;
         m_VerticalCamera = 0f;
         m_HorizontalCamera = 0f;
 
@@ -97,7 +102,7 @@ public class Player : MonoBehaviour
             m_XNeg = false;
             m_VerticalRotation = 0;
             m_HorizontalRotation = transform.eulerAngles.x;
-            rotZ = 270f;
+            rotZ = 90;
         }
 
         if (m_YNeg || m_YPos || m_ZNeg || m_ZPos)
@@ -309,11 +314,12 @@ public class Player : MonoBehaviour
     private void ZGravity()
     {
         m_PlayerRB.velocity = new Vector3(0, 0, m_PlayerRB.velocity.z);
-        if (!grounded)
-        {   
+        if (m_rotating && !grounded && Vector3.Angle(m_TargetRotation.eulerAngles, transform.eulerAngles) > 0.1f)
+        {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, m_TargetRotation, step);
             return;
         }
+        m_rotating = false;
 
         if (Physics.gravity.z > 0) {
             PositiveZGravity();
@@ -325,33 +331,29 @@ public class Player : MonoBehaviour
     private void PositiveZGravity()
     {
         // limit vertical spin on camera
-        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -20 + m_VerticalRotation, 100 + m_VerticalRotation);
+        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -60 + m_VerticalRotation, 100 + m_VerticalRotation);
 
+        // player turn around with camera
+        transform.localRotation = Quaternion.Euler(m_HorizontalRotation + m_HorizontalCamera, 90.0f, 270.0F);
+
+        // camera movements
+        camera.localRotation = Quaternion.Euler(m_VerticalRotation - m_VerticalCamera, 0, 0);
         if (grounded)
-        {
-            // player turn around with camera
-            transform.localRotation = Quaternion.Euler(m_HorizontalRotation + m_HorizontalCamera, 270.0f, 270.0F);
-
-            // camera movements
-            camera.localRotation = Quaternion.Euler(m_VerticalRotation - m_VerticalCamera, 0, 0);
-        }
-        Move();
+            Move();
     }
 
     private void NegativeZGravity()
     {
         // limit vertical spin on camera
-        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -20 + m_VerticalRotation, 100 + m_VerticalRotation);
+        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -60 + m_VerticalRotation, 100 + m_VerticalRotation);
 
+        // player turn around with camera
+        transform.localRotation = Quaternion.Euler(m_HorizontalRotation - m_HorizontalCamera, 90.0f, 90.0F);
+
+        // camera movements
+        camera.localRotation = Quaternion.Euler(m_VerticalRotation - m_VerticalCamera, 0, 0);
         if (grounded)
-        {
-            // player turn around with camera
-            transform.localRotation = Quaternion.Euler(m_HorizontalRotation - m_HorizontalCamera, 90.0f, 90.0F);
-
-            // camera movements
-            camera.localRotation = Quaternion.Euler(m_VerticalRotation - m_VerticalCamera, 0, 0);
-        }
-        Move();
+            Move();
     }
 
 
@@ -359,11 +361,12 @@ public class Player : MonoBehaviour
     private void XGravity()
     {
         m_PlayerRB.velocity = new Vector3(m_PlayerRB.velocity.x, 0, 0);
-        if (!grounded)
-        {   
+        if (m_rotating && !grounded && Vector3.Angle(m_TargetRotation.eulerAngles, transform.eulerAngles) > 0.1f)
+        {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, m_TargetRotation, step);
             return;
         }
+        m_rotating = false;
 
         if (Physics.gravity.x > 0) {
             PositiveXGravity();
@@ -375,33 +378,29 @@ public class Player : MonoBehaviour
     private void PositiveXGravity()
     {
         // limit vertical spin on camera
-        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -20 + m_VerticalRotation, 100 + m_VerticalRotation);
+        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -60 + m_VerticalRotation, 100 + m_VerticalRotation);
 
+        // player turn around with camera
+        transform.localRotation = Quaternion.Euler(m_HorizontalRotation - m_HorizontalCamera, 0, rotZ);
+
+        // // camera movements
+        camera.localRotation = Quaternion.Euler(m_VerticalRotation - m_VerticalCamera, 0, 0);
         if (grounded)
-        {
-            // player turn around with camera
-            transform.localRotation = Quaternion.Euler(m_HorizontalRotation - m_HorizontalCamera, 0, rotZ);
-
-            // // camera movements
-            camera.localRotation = Quaternion.Euler(m_VerticalRotation - m_VerticalCamera, 0, 0);
-        }
-        Move();
+            Move();
     }
 
     private void NegativeXGravity()
     {
         // limit vertical spin on camera
-        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -20 + m_VerticalRotation, 100 + m_VerticalRotation);
+        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -60 + m_VerticalRotation, 100 + m_VerticalRotation);
 
-        if (grounded)
-        {
             // player turn around with camera
             transform.localRotation = Quaternion.Euler(m_HorizontalRotation + m_HorizontalCamera, 0, rotZ);
 
             // // camera movements
             camera.localRotation = Quaternion.Euler(m_VerticalRotation - m_VerticalCamera, 0, 0);
-        }
-        Move();
+        if (grounded)
+            Move();
     }
 
 
@@ -409,15 +408,15 @@ public class Player : MonoBehaviour
     private void YGravity()
     {
         m_PlayerRB.velocity = new Vector3(0, m_PlayerRB.velocity.y, 0);
-        if (!grounded)
+        // Debug.Log(Vector3.Angle(m_TargetRotation.eulerAngles, transform.eulerAngles));
+        // Debug.Log(m_TargetRotation.eulerAngles);
+        // Debug.Log(transform.eulerAngles);
+        if (m_rotating && !grounded && Vector3.Angle(m_TargetRotation.eulerAngles, transform.eulerAngles) > 0.1f)
         {
-            // // bugfix
-            // if (rotZ == 0 && transform.eulerAngles.z < 0.1f)
-            //     m_TargetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, (int)0);
-            // rotate according to gravity
             transform.rotation = Quaternion.RotateTowards(transform.rotation, m_TargetRotation, step);
             return;
         }
+        m_rotating = false;
 
         if (Physics.gravity.y > 0)
             PositiveYGravity();
@@ -427,45 +426,43 @@ public class Player : MonoBehaviour
     private void PositiveYGravity()
     {
         // limit vertical spin on camera
-        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -20 + m_VerticalRotation, 80 + m_VerticalRotation);
+        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -60 + m_VerticalRotation, 80 + m_VerticalRotation);
+
+        // player turn around with camera
+        transform.localRotation = Quaternion.Euler(0, m_HorizontalRotation - m_HorizontalCamera, rotZ);
+
+        // camera movements
+        camera.localRotation = Quaternion.Euler(m_VerticalRotation + -m_VerticalCamera, 0, 0);
         if (grounded)
-        {
-            // player turn around with camera
-            transform.localRotation = Quaternion.Euler(0, m_HorizontalRotation - m_HorizontalCamera, rotZ);
-            // camera movements
-            camera.localRotation = Quaternion.Euler(m_VerticalRotation + -m_VerticalCamera, 0, 0);
-        }
-        Move();
+            Move();
     }
 
     private void NegativeYGravity()
     {
         // limit vertical spin on camera
-        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -20 + m_VerticalRotation, 80 + m_VerticalRotation);
-        if (grounded)
-        {
-            // player turn around with camera
-            transform.localRotation = Quaternion.Euler(0, m_HorizontalRotation + m_HorizontalCamera, rotZ);
+        m_VerticalCamera = Mathf.Clamp(m_VerticalCamera, -60 + m_VerticalRotation, 80 + m_VerticalRotation);
+        // player turn around with camera
+        transform.localRotation = Quaternion.Euler(0, m_HorizontalRotation + m_HorizontalCamera, rotZ);
 
-            // camera movements
-            camera.localRotation = Quaternion.Euler(m_VerticalRotation + -m_VerticalCamera, 0, 0);
-        }
-        Move();
+        // camera movements
+        camera.localRotation = Quaternion.Euler(m_VerticalRotation + -m_VerticalCamera, 0, 0);
+        if (grounded)
+            Move();
     }
 
     private void Move()
     {
         // right and left
-        if (Input.GetKey(KeyCode.RightArrow)) {
+        if (Input.GetKey(KeyCode.D)) {
             m_PlayerRB.velocity = transform.right * m_Speed;
-        } else if (Input.GetKey(KeyCode.LeftArrow)) {
+        } else if (Input.GetKey(KeyCode.A)) {
             m_PlayerRB.velocity = -transform.right * m_Speed;
         }
 
         // backward and forward
-        if (Input.GetKey(KeyCode.DownArrow)) {
+        if (Input.GetKey(KeyCode.S)) {
             m_PlayerRB.velocity += -transform.forward * m_Speed;
-        } else if (Input.GetKey(KeyCode.UpArrow)) {
+        } else if (Input.GetKey(KeyCode.W)) {
             m_PlayerRB.velocity += transform.forward * m_Speed;
         }
     }
@@ -474,6 +471,10 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag == "Ground")
             grounded = true;
+        if (other.gameObject.tag == "Death") {
+            grounded = true;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
 }
