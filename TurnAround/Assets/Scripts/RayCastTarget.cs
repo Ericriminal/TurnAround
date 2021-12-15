@@ -6,6 +6,7 @@ public class RayCastTarget : MonoBehaviour
 {
     public Robot_movement RobotScript;
     public LayerMask layerMask;
+    public GameObject Canvas;
     void FixedUpdate()
     {
         RaycastHit hit;
@@ -13,6 +14,7 @@ public class RayCastTarget : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+            Canvas.SetActive(true);
             if (hit.collider.tag == "Robot") {
                 if (Input.GetKeyDown(KeyCode.E)) {
                     hit.transform.gameObject.GetComponent<Robot_movement>().ActualizeTargetPosition(transform.position);
@@ -22,6 +24,7 @@ public class RayCastTarget : MonoBehaviour
         else
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.white);
+            Canvas.SetActive(false);
         }
     }
 }
