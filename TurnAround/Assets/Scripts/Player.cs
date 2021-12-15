@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     Rigidbody m_PlayerRB;
     Quaternion m_TargetRotation;
     public Transform camera;
+    public Transform startPos;
+    public CameraEffect camEffect;
     public float m_Speed;
     public float m_TurnSpeed = 5;
     float step;
@@ -15,7 +17,7 @@ public class Player : MonoBehaviour
     float m_VerticalCamera = 0f;
     bool m_rotating = false;
     public bool grounded = false;
-
+    private float air_speed;
     public GameObject arrowNextPos;
     float rotZ = 0f;
     float m_HorizontalRotation = 0f;
@@ -44,34 +46,79 @@ public class Player : MonoBehaviour
     {
         float horizontal = Input.GetAxis("Horizontal") * m_Speed;
         float vertical = Input.GetAxis("Vertical") * m_Speed;
+        // if (grounded) {
+        //     air_speed = 1f;
+        // } else {
+        //     air_speed = 10f;
+        // }
+
         if (!m_rotating)
         {
             m_HorizontalCamera += Input.GetAxis("Mouse X") * m_TurnSpeed;
             m_VerticalCamera += Input.GetAxis("Mouse Y") * m_TurnSpeed;
         }
 
+        if (m_XPos) {
+            arrowNextPos.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
+        } else if (m_XNeg) {
+            arrowNextPos.transform.rotation = Quaternion.Euler(0f, 0f, -90f);
+
+        } else if (m_YPos) {
+            arrowNextPos.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+            
+        } else if (m_YNeg) {
+            arrowNextPos.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            
+        } else if (m_ZPos) {
+            arrowNextPos.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
+            
+        } else if (m_ZNeg) {
+            arrowNextPos.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+        }
+
+
+
+
+
 
         // Y axis
         // if (Input.GetKeyDown(KeyCode.Alpha4) && !m_YNeg)
-        if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_ZPos)
+        if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_ZPos) {
+            StartCoroutine(camEffect.changeRotationEffect());
             ContinuousGravityYNeg();
+        }
         // if (Input.GetKeyDown(KeyCode.Alpha3) && !m_YPos)
-        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_YNeg)
+        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_YNeg) {
+            StartCoroutine(camEffect.changeRotationEffect());
             ContinuousGravityYPos();
+
+        }
         // X axis
         // if (Input.GetKeyDown(KeyCode.Alpha1) && !m_XPos)
-        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_XNeg)
+        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_XNeg) {
+            StartCoroutine(camEffect.changeRotationEffect());
+
             ContinuousGravityXPos();
+        }
         // if (Input.GetKeyDown(KeyCode.Alpha2) && !m_XNeg)
-        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_YPos)
+        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_YPos) {
+            StartCoroutine(camEffect.changeRotationEffect());
             ContinuousGravityXNeg();
+
+        }
         // Z axis
         // if (Input.GetKeyDown(KeyCode.Alpha6) && !m_ZNeg)
-        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_XPos)
+        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_XPos) {
+            StartCoroutine(camEffect.changeRotationEffect());
             ContinuousGravityZNeg();
+
+        }
         // if (Input.GetKeyDown(KeyCode.Alpha5) && !m_ZPos)
-        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_ZNeg)
+        else if (grounded && Input.GetKeyDown(KeyCode.Alpha1) && m_ZNeg) {
+            StartCoroutine(camEffect.changeRotationEffect());
             ContinuousGravityZPos();
+
+        }
 
         if (Physics.gravity.y == 0 && Physics.gravity.z == 0)
             XGravity();
@@ -338,7 +385,7 @@ public class Player : MonoBehaviour
 
         // camera movements
         camera.localRotation = Quaternion.Euler(m_VerticalRotation - m_VerticalCamera, 0, 0);
-        if (grounded)
+        // if (grounded)
             Move();
     }
 
@@ -352,7 +399,7 @@ public class Player : MonoBehaviour
 
         // camera movements
         camera.localRotation = Quaternion.Euler(m_VerticalRotation - m_VerticalCamera, 0, 0);
-        if (grounded)
+        // if (grounded)
             Move();
     }
 
@@ -385,7 +432,7 @@ public class Player : MonoBehaviour
 
         // // camera movements
         camera.localRotation = Quaternion.Euler(m_VerticalRotation - m_VerticalCamera, 0, 0);
-        if (grounded)
+        // if (grounded)
             Move();
     }
 
@@ -399,7 +446,7 @@ public class Player : MonoBehaviour
 
             // // camera movements
             camera.localRotation = Quaternion.Euler(m_VerticalRotation - m_VerticalCamera, 0, 0);
-        if (grounded)
+        // if (grounded)
             Move();
     }
 
@@ -433,7 +480,7 @@ public class Player : MonoBehaviour
 
         // camera movements
         camera.localRotation = Quaternion.Euler(m_VerticalRotation + -m_VerticalCamera, 0, 0);
-        if (grounded)
+        // if (grounded)
             Move();
     }
 
@@ -446,7 +493,7 @@ public class Player : MonoBehaviour
 
         // camera movements
         camera.localRotation = Quaternion.Euler(m_VerticalRotation + -m_VerticalCamera, 0, 0);
-        if (grounded)
+        // if (grounded)
             Move();
     }
 
@@ -454,9 +501,9 @@ public class Player : MonoBehaviour
     {
         // right and left
         if (Input.GetKey(KeyCode.D)) {
-            m_PlayerRB.velocity = transform.right * m_Speed;
+            m_PlayerRB.velocity += transform.right * m_Speed;
         } else if (Input.GetKey(KeyCode.A)) {
-            m_PlayerRB.velocity = -transform.right * m_Speed;
+            m_PlayerRB.velocity += -transform.right * m_Speed;
         }
 
         // backward and forward
@@ -469,12 +516,19 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "Ground")
+        if (!grounded && other.gameObject.tag == "Ground") {
             grounded = true;
+            FindObjectOfType<AudioManager>().Play("Landing");
+
+        }
         if (other.gameObject.tag == "Death") {
-            grounded = true;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            transform.position = startPos.position;
+            ContinuousGravityYNeg();
         }
     }
 
+    private void OnCollisionExit(Collision other) {
+        grounded = false;
+    }
 }
