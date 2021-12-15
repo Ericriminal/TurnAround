@@ -532,13 +532,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay(Collision other) {
-        if (!grounded && other.gameObject.tag == "Ground") {
-            grounded = true;
-            FindObjectOfType<AudioManager>().Play("Landing");
-        }
-    }
-
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Key") {
             inventory.AddObject("Key");
