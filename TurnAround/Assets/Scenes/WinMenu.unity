@@ -362,6 +362,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
+      propertyPath: sounds.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
+      propertyPath: sounds.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9af8c5fa3d29fc64983e63a745f03fa7, type: 3}
+    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
+      propertyPath: sounds.Array.data[2].loop
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
+      propertyPath: sounds.Array.data[2].name
+      value: Victory
+      objectReference: {fileID: 0}
+    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
+      propertyPath: sounds.Array.data[2].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
+      propertyPath: sounds.Array.data[2].volume
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 3182044560921526725, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
+      propertyPath: sounds.Array.data[2].mixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: 0923159a37de47b4bb15e3f447119ed1, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d39340b1fcd3d1499e87d78efe22160, type: 3}
 --- !u!1 &1486812108
